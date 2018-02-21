@@ -1,0 +1,63 @@
+﻿html,body,div,p{
+    margin:0;padding:0;
+}
+
+body {
+}
+.main{
+    width:100%;height:100%;
+    padding-top:2em;
+}
+.jumboText{
+  
+    width:80%;
+    margin:0 auto;
+    background-color:#333;
+    color:#fff;
+    text-align:center;
+}
+    .jumboText h1 {
+        padding: 1em;
+        font: bold 28px arial,verdana;
+    }
+
+.actions {
+    
+    width:80%;
+    margin: 0 auto;
+    color: #fff;
+    text-align: left;
+    padding: 0.5em;
+}
+    .actions p{
+     padding:0.3em;
+     width:5em;float:left;
+    }
+    .actions button {
+        border: none;
+        margin-left: 0.5em;
+        background-color: #fff;
+        padding:0.3em;
+        box-shadow: rgb(128, 128, 128) 3px 5px 7px;
+        padding-left:1em;
+        padding-right:1em;
+        cursor:pointer;
+    }
+.get {
+    background-color: green;
+    padding: 2em;
+}
+.test {
+    padding: 2em;
+    background-color: orange;
+}
+.result {
+    clear: both;
+    font-size: 0.7em;
+    white-space: nowrap;
+   
+}
+    .result p {
+        background-color: #333;
+        width:80%;
+    }
