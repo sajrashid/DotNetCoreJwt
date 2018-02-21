@@ -36,6 +36,7 @@ namespace DotNetCoreJwt
                          ValidateAudience = true,
                          ValidateLifetime = true,
                          ValidateIssuerSigningKey = true,
+                         ClockSkew = TimeSpan.Zero,
                          ValidIssuer = "localhost",
                          ValidAudience = "localhost",
                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Rather_very_long_key"))

@@ -49,7 +49,7 @@ namespace API.Controllers
             var token = new JwtSecurityToken(
               issuer: "localhost",
               audience:"localhost",
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddMinutes(1),
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
