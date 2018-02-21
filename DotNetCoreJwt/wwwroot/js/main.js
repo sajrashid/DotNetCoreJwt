@@ -42,7 +42,8 @@ testJwtBtn.onclick = function () {
             },
             contentType: "application/json-patch+json",
             error: function (err) {
-                console.log('Error!', err)
+                console.log('Error!', err.statusCode)
+                testRes.innerText = "Error!" +':Code:'+ err.status + " Status Text " + err.statusText +" ,your token has probably expired get a new one!!!";
             },
             success: function (data) {
                 console.log('values' + data)
