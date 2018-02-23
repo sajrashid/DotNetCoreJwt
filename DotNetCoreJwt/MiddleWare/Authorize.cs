@@ -24,9 +24,13 @@ namespace DotNetCoreJwt.MiddleWare
         public async Task Invoke(HttpContext context) //DI IOPtions read from appsettings.json
         {
             bool IsAUthentictaed = context.User.Identity.IsAuthenticated;
-            string AuthenticationType = context.User.Identity.AuthenticationType.ToLower();
+            string AuthenticationType = string.Empty;
+            if (IsAUthentictaed)
+            {
+                 AuthenticationType = context.User.Identity.AuthenticationType.ToLower();
+            }
             // test if autheticated && AuthTYpe is bearer
-            if ((IsAUthentictaed) && (AuthenticationType == "authenticationTypes.federation"))
+            if (AuthenticationType == "authenticationTypes.federation")
             {
                 //get IP
                 var RemoteIpAddress = context.Connection.RemoteIpAddress.ToString(); //  returns  ::1 if local
@@ -36,15 +40,17 @@ namespace DotNetCoreJwt.MiddleWare
                         var HostName = Dns.GetHostName();
                         var Headers = context.Request.Headers;
                      
-                            foreach (var H in Headers)
+                            foreach (var header in Headers)
                             {
+                                bool isBearer = header.Value.ToString().ToLower().Contains("bearer");
                                 //look for auth headers with bearer
-                                if ((H.Key == "Authorization") && (H.Value.ToString().ToLower().Contains("bearer")))
+                                if ((header.Key == "Authorization") && (isBearer))
                                 {
                                     // get header value
-                                    var Value = H.Value.ToString();
+                                    var headerValue = header.Value.ToString();
                                     // clean string remove bearer
-                                    string Token = Regex.Replace(Value, "bearer ", "", RegexOptions.IgnoreCase);
+                                    // regex to remove bearer with ignore case
+                                    string token = Regex.Replace(headerValue, "bearer ", "", RegexOptions.IgnoreCase);
 
                                     // TODO
                                     // Now We Have A Clean Token 
@@ -63,7 +69,7 @@ namespace DotNetCoreJwt.MiddleWare
 
             }
             // else check if windows // may need to check for CloudAP
-            else if((IsAUthentictaed) && (AuthenticationType == "ntlm" || AuthenticationType == "kerberos"  ))
+            else if((AuthenticationType == "ntlm" || AuthenticationType == "kerberos"  ))
             {
                 // attach claims for windows users
             }
