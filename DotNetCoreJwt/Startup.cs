@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DotNetCoreJwt.MiddleWare;
+using DotNetCoreJwt.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -42,8 +45,15 @@ namespace DotNetCoreJwt
                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Rather_very_long_key"))
                      };
                  });
-
-            services.AddMvc();
+            services.AddMetrics()
+              .AddHealthChecks()
+              .AddJsonSerialization()
+              .AddMetricsMiddleware(options => options.IgnoredHttpStatusCodes = new[] { 404 });
+            // register claims service with DI
+            services.AddSingleton<ClaimsService>();
+            services.AddSingleton<TokensService>();
+            services.AddMvc(options => options.AddMetricsResourceFilter());
+          
             // swagger needs to be after service.mvc
             //https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-help-pages-using-swagger?tabs=visual-studio
             // url is http://localhost:50011/swagger/
@@ -67,8 +77,9 @@ namespace DotNetCoreJwt
             app.UseStaticFiles();
             app.UseAuthentication();
             // run the auth middleware componenet
-            //app.UseMiddleware<AuthMiddleware>();
-
+            app.UseMiddleware<Authorize>();
+            //https://al-hardy.blog/2017/04/28/asp-net-core-monitoring-with-influxdb-grafana/
+            app.UseMetrics();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 

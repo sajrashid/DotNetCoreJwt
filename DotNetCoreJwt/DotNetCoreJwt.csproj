@@ -2,15 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>af303727-4524-41a3-a2c3-a5ec4ebb97ce</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="App.Metrics.Extensions.Mvc" Version="1.2.1" />
+    <PackageReference Include="App.Metrics.Formatters.Json" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
+
+
 
 </Project>

@@ -7,25 +7,25 @@ getJwtBtn.onclick = function () {
     getRes.innerText = "...........";
     // get token
     $.ajax({
-        url: "http://localhost:57425/api/token",
-        type: 'POST',
-        data: '{ "username": "mario", "password": "secret" }',
+        
+        url: "http://localhost:57425/api/Token?APIKey=SuperDuperApiKey", 
+        type: 'Get',
         contentType: "application/json-patch+json",
         error: function (err) {
-            console.log('Error!', err)
+            console.log('Error!', err);
         },
         success: function (data) {
-            console.log('Got token!')
+            console.log('Got token!');
             console.log('Token:' + data.token);
 
             getRes.innerText = "GotToken:" + data.token;
 
-          
+
             // save token to localstorage 
             localStorage.setItem('token', data.token);
         }
     });
-}
+};
 
 testJwtBtn.onclick = function () {
     //uses token to authenticate
@@ -42,11 +42,11 @@ testJwtBtn.onclick = function () {
             },
             contentType: "application/json-patch+json",
             error: function (err) {
-                console.log('Error!', err.statusCode)
-                testRes.innerText = "Error!" +':Code:'+ err.status + " Status Text " + err.statusText +" ,your token has probably expired get a new one!!!";
+                console.log('Error!', err.statusCode);
+                testRes.innerText = "Error!" + ':Code:' + err.status + " Status Text " + err.statusText + " ,your token has probably expired get a new one!!!";
             },
             success: function (data) {
-                console.log('values' + data)
+                console.log('values' + data);
                 testRes.innerText = "Authorised!......values:" + data;
             }
             // Fetch the stored token from localStorage and set in the header
@@ -54,9 +54,9 @@ testJwtBtn.onclick = function () {
     } else {
         testRes.innerText = "valees:" + 'you need to get a token first';
     }
-  
-   
 
-}
+
+
+};
 
 

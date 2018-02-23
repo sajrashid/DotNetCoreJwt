@@ -9,7 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+using Microsoft.Extensions.Logging;
+using DotNetCoreJwt.Services;
 
 namespace API.Controllers
 {
@@ -18,65 +19,50 @@ namespace API.Controllers
     public class TokenController : Controller
     {
         private IConfiguration _config;
+        private readonly ILogger _logger;
+        private ClaimsService _claimsService;
+        private TokensService _tokenService;
 
-        public TokenController(IConfiguration config)
+
+        public TokenController(IConfiguration config, ILogger<TokenController> logger, ClaimsService claimsService, TokensService tokenService)
         {
+            _logger = logger;
             _config = config;
+            _claimsService=claimsService;
+            _tokenService = tokenService;
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        public IActionResult CreateToken([FromBody]LoginModel login)
+        [HttpGet]
+        public IActionResult CreateToken(String APIKey)
         {
+            // sets default to not authroised
             IActionResult response = Unauthorized();
-            var user = Authenticate(login);
+            var user = Authenticate(APIKey);
 
             if (user != null)
             {
-                var tokenString = BuildToken(user);
+                var claims = _claimsService.CreateJwtClaims(user, "Mule"); // get role from db/api key
+                var tokenString = _tokenService.BuildToken(claims, "Rather_very_long_key");
                 response = Ok(new { token = tokenString });
             }
-
+           
             return response;
         }
 
-        private string BuildToken(UserModel user)
+       
+
+        private string Authenticate(String APIKey)
         {
+            var user = string.Empty;
 
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Rather_very_long_key"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-              issuer: "localhost",
-              audience:"localhost",
-              expires: DateTime.Now.AddMinutes(1),
-              signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private UserModel Authenticate(LoginModel login)
-        {
-            UserModel user = null;
-
-            if (login.Username == "mario" && login.Password == "secret")
+            if (APIKey == "SuperDuperApiKey") // check api keys froms constants from DB
             {
-                user = new UserModel { Name = "Mario Rossi", Email = "mario.rossi@domain.com" };
+                user = "Mule";
             }
             return user;
         }
 
-        public class LoginModel
-        {
-            public string Username { get; set; }
-            public string Password { get; set; }
-        }
-
-        private class UserModel
-        {
-            public string Name { get; set; }
-            public string Email { get; set; }
-            public DateTime Birthdate { get; set; }
-        }
+        
     }
 }
