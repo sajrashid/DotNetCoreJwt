@@ -21,7 +21,7 @@ namespace DotNetCoreJwt.MiddleWare
         }
 
 
-        public async Task Invoke(HttpContext context) //DI IOPtions read from appsettings.json
+        public async Task Invoke(HttpContext context) 
         {
             bool IsAuthenticated = context.User.Identity.IsAuthenticated;
             string AuthenticationType = string.Empty;
