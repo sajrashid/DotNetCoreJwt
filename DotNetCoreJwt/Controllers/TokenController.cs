@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using DotNetCoreJwt.Services;
 using System.Collections.Generic;
+using DotNetCoreJwt.Services.Identity.Claims;
 
 namespace API.Controllers
 {
@@ -14,10 +14,10 @@ namespace API.Controllers
     {
         private IConfiguration _config;
         private readonly ILogger _logger;
-        private ClaimsService _claimsService;
+        private IClaimsService _claimsService;
 
 
-        public TokenController(IConfiguration config, ILogger<TokenController> logger, ClaimsService claimsService)
+        public TokenController(IConfiguration config, ILogger<TokenController> logger, IClaimsService claimsService)
         {
             _logger = logger;
             _config = config;

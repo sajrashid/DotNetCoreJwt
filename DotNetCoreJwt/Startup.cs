@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using DotNetCoreJwt.MiddleWare;
-using DotNetCoreJwt.Services;
+using DotNetCoreJwt.Services.Identity.Claims;
+using DotNetCoreJwt.Services.Identity.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using otNetCoreJwt.Services.Identity.Claims;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace DotNetCoreJwt
@@ -67,12 +64,12 @@ namespace DotNetCoreJwt
 
 
             // register custom claims service
-            services.AddSingleton<ClaimsService>();
+            services.AddSingleton<IClaimsService, ClaimsService>();
 
 
 
             //register custom Token service
-            services.AddSingleton<TokensService>();
+            services.AddSingleton<ITokensService, TokensService>();
 
 
 
@@ -126,14 +123,16 @@ namespace DotNetCoreJwt
             // tells api to auth
             app.UseAuthentication();
 
-
-
+            // This is the error handling middleWare 
+            // this traps error on invoking next
+            // This Middleware neeeds to be before other custom middleware to work
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             // run the custom auth middleware componenet
             // We should rename this it's not realy doing auth
             // at the moment it just checks if your autheticated with bearer or windows auth
             // maybe we call is validation middeware as where validating the user is from mule for example
-            app.UseMiddleware<Authorize>();
+            app.UseMiddleware<AuthorizeMiddleWare>();
 
 
 
@@ -152,8 +151,7 @@ namespace DotNetCoreJwt
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-
-
+          
 
             app.UseMvc();
         }

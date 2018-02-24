@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace DotNetCoreJwt.MiddleWare
 {
-    public class Authorize
+    public class AuthorizeMiddleWare
     {
         private readonly RequestDelegate next;
 
 
-        public Authorize(RequestDelegate next)
+        public AuthorizeMiddleWare(RequestDelegate next)
         {
             this.next = next;
         }
@@ -56,8 +56,7 @@ namespace DotNetCoreJwt.MiddleWare
                     // use CreateADLDSClaims in the ClaimsService
                 }
             }
-           
-            await next(context);
+             await next(context);
 
 
         }

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace DotNetCoreJwt.Services
+namespace DotNetCoreJwt.Services.Identity.Tokens
 {
-    public class TokensService
+    public class TokensService:ITokensService
     {
+
 
         public string BuildToken(List<Claim> Claims)
         {
@@ -19,12 +20,12 @@ namespace DotNetCoreJwt.Services
 
             // create a securoty key
             var key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(JwtSigningKey));
-            
+
 
             // sign the key using specified algorithm
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            
-            
+
+
             // create the token from the signed credential
             var token = new JwtSecurityToken(
               issuer: "localhost",

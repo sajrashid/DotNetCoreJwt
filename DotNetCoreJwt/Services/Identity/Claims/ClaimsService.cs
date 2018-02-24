@@ -1,15 +1,17 @@
-﻿using System;
+﻿using DotNetCoreJwt.Services.Identity.Claims;
+using DotNetCoreJwt.Services.Identity.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
 
-namespace DotNetCoreJwt.Services
+namespace otNetCoreJwt.Services.Identity.Claims
 {
-    public class ClaimsService
+    public class ClaimsService:IClaimsService
     {
-        private  TokensService _tokenService;
+        private  ITokensService _tokenService;
 
-        public ClaimsService(TokensService tokensService)
+        public ClaimsService(ITokensService tokensService)
         {
             _tokenService = tokensService;
 
@@ -52,6 +54,6 @@ namespace DotNetCoreJwt.Services
             return claims;
         }
 
-
+      
     }
 }
