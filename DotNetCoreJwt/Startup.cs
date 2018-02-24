@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using DotNetCoreJwt.MiddleWare;
 using DotNetCoreJwt.Services.Identity.Claims;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using otNetCoreJwt.Services.Identity.Claims;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace DotNetCoreJwt
