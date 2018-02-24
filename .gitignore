@@ -9,7 +9,6 @@
 /.vs
 /MetricsRazor/bin/
 /MetricsRazor/obj/
-/MetricsRazor/bin/Debug/
-/MetricsRazor/bin/Debug/net461
 /MetricsRazor/obj/Debug/
+/MetricsRazor/bin/Debug/net461
 /MetricsRazor/obj/Release/net461
