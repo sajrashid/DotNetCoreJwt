@@ -5,5 +5,11 @@
 /.vs/DotNetCoreJwt/v15/Server/sqlite3
 /.vs/DotNetCoreJwt/v15
 /.vs
+/.vs/MetricsRazor/v15
+/.vs
 /MetricsRazor/bin/
 /MetricsRazor/obj/
+/MetricsRazor/bin/Debug/
+/MetricsRazor/bin/Debug/net461
+/MetricsRazor/obj/Debug/
+/MetricsRazor/obj/Release/net461
