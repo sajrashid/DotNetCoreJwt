@@ -1,36 +1,54 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
+
 
 namespace DotNetCoreJwt.Services
 {
-
     public class ClaimsService
     {
+        private  TokensService _tokenService;
 
-        public List<Claim> CreateJwtClaims( String UserId, String Role) //use name like mule for anonymous/JWT users
+        public ClaimsService(TokensService tokensService)
         {
-            var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, UserId),
-                        new Claim(ClaimTypes.Role, Role)
-                    };
-            return claims;
+            _tokenService = tokensService;
+
+        }
+
+        public String CreateJwtClaims( String UserId, List<String> Roles) //use name like mule for anonymous/JWT users
+        {
+            // create a list of claims and add userId 
+            var Claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, UserId)
+            };
+            // add roles to the claims list
+            // for every role add a new claim type role
+            foreach (var role in Roles)
+            {
+                Claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            // Get new token from token service
+           string Token = _tokenService.BuildToken(Claims);
+           return Token;
         }
 
 
         //ToDo for ADLDS
         public List<Claim> CreateADLDSClaims(String UserId) //use StaffId for windows.
         {
-            // get roles from ADLDA/LDAP & Create Claims
+            //TOFO get roles from ADLDS/LDAP & Create Claims
             var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, UserId),
                     };
+            //TODO goto ADLDS service and lookup groups
+            // add groups as roles to the claims list
+            // for every role add a new claim type role
+            //foreach (var role in Roles)
+            //{
+            //    Claims.Add(new Claim(ClaimTypes.Role, role));
+            //}
             return claims;
         }
 

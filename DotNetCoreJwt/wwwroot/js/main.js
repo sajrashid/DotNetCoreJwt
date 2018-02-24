@@ -13,6 +13,7 @@ getJwtBtn.onclick = function () {
         contentType: "application/json-patch+json",
         error: function (err) {
             console.log('Error!', err);
+            getRes.innerText = "Error:" + err.statusCode + "        Status Text " + err.statusText;
         },
         success: function (data) {
             console.log('Got token!');
@@ -43,7 +44,7 @@ testJwtBtn.onclick = function () {
             contentType: "application/json-patch+json",
             error: function (err) {
                 console.log('Error!', err.statusCode);
-                testRes.innerText = "Error!" + ':Code:' + err.status + " Status Text " + err.statusText + " ,your token has probably expired get a new one!!!";
+                testRes.innerText = "Error!" + ':Code:' + err.status + "        Status Text " + err.statusText + " ,your token has probably expired get a new one!!!";
             },
             success: function (data) {
                 console.log('values' + data);

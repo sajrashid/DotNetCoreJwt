@@ -15,7 +15,7 @@ namespace DotNetCoreJwt.MiddleWare
         private readonly RequestDelegate next;
 
 
-        public   Authorize(RequestDelegate next)
+        public Authorize(RequestDelegate next)
         {
             this.next = next;
         }
@@ -23,58 +23,108 @@ namespace DotNetCoreJwt.MiddleWare
 
         public async Task Invoke(HttpContext context) //DI IOPtions read from appsettings.json
         {
-            bool IsAUthentictaed = context.User.Identity.IsAuthenticated;
+            bool IsAuthenticated = context.User.Identity.IsAuthenticated;
             string AuthenticationType = string.Empty;
-            if (IsAUthentictaed)
-            {
+            // Test if caller is authenticated otherwise they need to get a token
+            // windows will handle the authentication automatically and set isAuthenticated to true;
+
+
+
+            if (IsAuthenticated)
+            {     
+                 // get the type of authentication
                  AuthenticationType = context.User.Identity.AuthenticationType.ToLower();
-            }
-            // test if autheticated && AuthTYpe is bearer
-            if (AuthenticationType == "authenticationTypes.federation")
-            {
-                //get IP
-                var RemoteIpAddress = context.Connection.RemoteIpAddress.ToString(); //  returns  ::1 if local
 
-                    if (RemoteIpAddress == "::1")  //shows  ::1  for local
+
+
+                // test if  AuthTYpe is bearer (authenticationTypes.federation)
+                if (AuthenticationType == "authenticationtypes.federation")
+                {
+                    // test if the caller macthes HOSTNAME etc..
+                    if (!VerifyBearer(context))
                     {
-                        var HostName = Dns.GetHostName();
-                        var Headers = context.Request.Headers;
-                     
-                            foreach (var header in Headers)
-                            {
-                                bool isBearer = header.Value.ToString().ToLower().Contains("bearer");
-                                //look for auth headers with bearer
-                                if ((header.Key == "Authorization") && (isBearer))
-                                {
-                                    // get header value
-                                    var headerValue = header.Value.ToString();
-                                    // clean string remove bearer
-                                    // regex to remove bearer with ignore case
-                                    string token = Regex.Replace(headerValue, "bearer ", "", RegexOptions.IgnoreCase);
+                        // if not send 401 unauthorised
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    }
+                   
 
-                                    // TODO
-                                    // Now We Have A Clean Token 
-                                    // Select Token From Table Where Hostname = Hostname;
-                                    // Test If Token Matches
-                                    //    If (Token!=Tokenfromdb)
-                                    //    { //Someone If Using A Token That Does Not Match The Hostname
-                                    //       //Redirect To 401/403
-                                    //    }
-                                    //}
-                                }
+                }
+                // else check if windows authentication
+                else if ((AuthenticationType == "ntlm" || AuthenticationType == "kerberos"))
+                {
+                    //TODO attach claims for windows users
+                    // use CreateADLDSClaims in the ClaimsService
+                }
+            }
+           
+            await next(context);
 
-                            }
+
+        }
+
+
+
+        //TODO should this be moved to a Verify/Validation Service 
+        private bool VerifyBearer(HttpContext context)
+        {
+            bool IsTokenValid = false;
+            //get callers IP
+            var RemoteIpAddress = context.Connection.RemoteIpAddress.ToString(); //  returns  ::1 if local
+            //TODO change this out to list of allowed hostname IP address
+            if (RemoteIpAddress == "::1")  //shows  ::1  for local set this for mule
+            {
+                String HostName = Dns.GetHostName();
+                IHeaderDictionary Headers = context.Request.Headers;
+
+                // loop thorugh all header for each header
+                foreach (var header in Headers)
+                {
+
+                    // test if the auth header = Authorization
+                    if (header.Key == "Authorization")
+                    {
+                        // test the header for word bearer
+                        bool IsBearer = header.Value.ToString().ToLower().Contains("bearer");
+
+
+
+                        // check TODO's
+                        if (IsBearer) // header found!!!
+                        {
+                            // get header value
+                            String Headervalue = header.Value;
+                            // we are using regex to remove bearer with ignore case!!!
+                            string token = Regex.Replace(Headervalue, "bearer ", "", RegexOptions.IgnoreCase);
+                            //now we have a clean token to check against the stored token in the DB
+
+
+
+
+                            // TODO
+                            // Select Token From Table Where Hostname = Hostname;
+                            // Test If Token Matches
+                            //    If (Token!=Tokenfromdb)
+                            //    Token does not match 
+                            //    { //Someone Is Using A Token That Does Not Match The Hostname!!!!!
+                            //       //Redirect To 401/403
+                            //    }
+
+                            IsTokenValid = true;
+                        }
+
+
 
                     }
 
+
+
+                }
+
             }
-            // else check if windows // may need to check for CloudAP
-            else if((AuthenticationType == "ntlm" || AuthenticationType == "kerberos"  ))
-            {
-                // attach claims for windows users
-            }
-            await next(context);
+
+            return IsTokenValid;
         }
+
 
     }
 }

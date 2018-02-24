@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using DotNetCoreJwt.Services;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -21,46 +15,46 @@ namespace API.Controllers
         private IConfiguration _config;
         private readonly ILogger _logger;
         private ClaimsService _claimsService;
-        private TokensService _tokenService;
 
 
-        public TokenController(IConfiguration config, ILogger<TokenController> logger, ClaimsService claimsService, TokensService tokenService)
+        public TokenController(IConfiguration config, ILogger<TokenController> logger, ClaimsService claimsService)
         {
             _logger = logger;
             _config = config;
             _claimsService=claimsService;
-            _tokenService = tokenService;
         }
+
+
 
         [AllowAnonymous]
         [HttpGet]
         public IActionResult CreateToken(String APIKey)
         {
-            // sets default to not authroised
+            // sets default to not authroised http 401
             IActionResult response = Unauthorized();
-            var user = Authenticate(APIKey);
 
-            if (user != null)
+            var User = string.Empty;
+            var Roles = new List<String>();
+
+
+
+            // TODO  // check api keys  get from DB
+            if (APIKey == "SuperDuperApiKey") 
             {
-                var claims = _claimsService.CreateJwtClaims(user, "Mule"); // get role from db/api key
-                var tokenString = _tokenService.BuildToken(claims, "Rather_very_long_key");
-                response = Ok(new { token = tokenString });
+                User = "Mule"; //TODO get userneme from db
+                Roles.Add("Mule");//TODO get role from db/api key
+
+
+                // get a token
+                String TokenString = _claimsService.CreateJwtClaims(User, Roles); 
+
+
+
+                //update the http response  to http 200 & send token to caller
+                response = Ok(new { token = TokenString });
             }
            
             return response;
-        }
-
-       
-
-        private string Authenticate(String APIKey)
-        {
-            var user = string.Empty;
-
-            if (APIKey == "SuperDuperApiKey") // check api keys froms constants from DB
-            {
-                user = "Mule";
-            }
-            return user;
         }
 
         
