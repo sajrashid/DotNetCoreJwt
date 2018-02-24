@@ -1,0 +1,25 @@
+{
+  "name": "DotNetCoreJwt",
+  "homepage": "https://github.com/sajrashid/DotNetCoreJwt",
+  "authors": [
+    "Sajid Rashid"
+  ],
+  "description": "DOTNET CORE 2 WEBAPI",
+  "main": "Index.HTML",
+  "keywords": [
+    "JWT",
+    "BEARER",
+    "DOTNET",
+    "CORE2",
+    "WEB",
+    "API"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

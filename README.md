@@ -1,25 +1,14 @@
 # DotNetCoreJwt
-## Contains simple JWT implementation 
-Simple JWT example </br>
-Get token from token controller /api/token CreateToken method uses post from body username / password </br>
-Test Authorise on api/vlaues controller (sends bearer header + token) </br>
-Test page /index.html </br>
-Contains swagger http://localhost:57425/swagger/ </br>
-Test Post Token from swagger paste into parameters  { "username": "mario", "password": "secret" }</br>
-</br>
-NB: update the ports in the wwwroot main js file  </br>
 
-
-# DotNetCoreJwt
-
-ontains simple JWT implementation, with MiddleWare to validate the caller
+Contains simple JWT implementation, with MiddleWare to validate the caller
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.<br>
-Use the Index.html file in wwwroot folder to test JWT.
-GetToken fetches a token from the Token Controller
-Test Token calls the Values Controller wich contains the Authorise attribute
+
+Use the Index.html file in wwwroot folder to test JWT.<br>
+GetToken fetches a token from the Token Controller.<br>
+T test the JWT tken call the Values Controller wich contains the Authorise attribute<br>
+
 
 ### Prerequisites
 
@@ -29,6 +18,17 @@ Visual Studio 2017, DOT NET CORE 2 SDK
 
 Clone the repository, open the solution file DotNetCoreJwt
 Nuget will restore the packages automatically
+
+### Troubleshooting
+There is built in error handling Middleware this traps error in the delegate next, its purpose is to help find any errors in middleware<br>
+See AuthorizeMiddleWare.cs, also check tne comments in the startup to place it correctly in the pipeline
+
+### Logging
+
+Logging standard dot net core logging is registerd in Program.cs see Token controller for an instance of logger
+
+### Documentation
+Uese Swagger, go to api/swagger for API doc's
 
 ## Running the tests
 
@@ -78,6 +78,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hat tip to anyone who's code was used
-* Inspiration
-* etc
+
 

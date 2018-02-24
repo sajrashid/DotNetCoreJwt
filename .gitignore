@@ -5,7 +5,5 @@
 /.vs/DotNetCoreJwt/v15/Server/sqlite3
 /.vs/DotNetCoreJwt/v15
 /.vs
-/MetricsRazor/bin/Debug/net461
-/testRAzor/bin/Debug/netcoreapp2.0
-/testRAzor/obj
-/MetricsRazor/obj/Release/net461
+/MetricsRazor/bin/
+/MetricsRazor/obj/

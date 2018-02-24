@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using DotNetCoreJwt.MiddleWare;
 using DotNetCoreJwt.Services.Identity.Claims;
@@ -113,10 +114,14 @@ namespace DotNetCoreJwt
 
 
 
+
+            // set startup file to index.html for easy testing
+            app.UseDefaultFiles();
+
+            
             //added support for static file
             // 401's on favicons are no more!
             app.UseStaticFiles();
-
 
 
 
