@@ -49,12 +49,7 @@ namespace DotNetCoreJwt.MiddleWare
                    
 
                 }
-                // else check if windows authentication
-                else if ((AuthenticationType == "ntlm" || AuthenticationType == "kerberos"))
-                {
-                    //TODO attach claims for windows users or create method in token service might be better ???
-                    // use CreateADLDSClaims in the ClaimsService
-                }
+             
             }
              await next(context);
 
