@@ -9,9 +9,9 @@ namespace DotNetCoreJwt.MiddleWare
     public class VerifyTokenSenderMiddleWare
     {
         private readonly RequestDelegate next;
-        private ITokensService _tokenService;
+        private ITokensFactory _tokenService;
 
-        public VerifyTokenSenderMiddleWare(RequestDelegate next, ITokensService tokenservice)
+        public VerifyTokenSenderMiddleWare(RequestDelegate next, ITokensFactory tokenservice)
         {
             this.next = next;
             _tokenService = tokenservice;

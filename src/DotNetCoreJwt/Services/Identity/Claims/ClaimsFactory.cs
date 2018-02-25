@@ -1,5 +1,4 @@
-﻿using DotNetCoreJwt.Services.Identity.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -9,13 +8,11 @@ namespace DotNetCoreJwt.Services.Identity.Claims
     /// <summary>
     /// This service should handle anything to do with claims
     /// </summary>
-    public class ClaimsService:IClaimsService
+    public class ClaimsFactory : IClaimsFactory
     {
-        private  ITokensService _tokenService;
 
-        public ClaimsService(ITokensService tokensService)
+        public ClaimsFactory()
         {
-            _tokenService = tokensService;
 
         }
         /// <summary>
@@ -25,7 +22,7 @@ namespace DotNetCoreJwt.Services.Identity.Claims
         /// <param name="UserId"></param>
         /// <param name="Roles"></param>
         /// <returns></returns>
-        public String CreateJwtClaims( String UserId, List<String> Roles) //use name like mule for anonymous/JWT users
+        public List<Claim> CreateJwtClaims( String UserId, List<String> Roles) //use name like mule for anonymous/JWT users
         {
             // create a list of claims and add userId 
             var Claims = new List<Claim>
@@ -38,9 +35,8 @@ namespace DotNetCoreJwt.Services.Identity.Claims
             {
                 Claims.Add(new Claim(ClaimTypes.Role, role));
             }
-            // Get new token from token service
-           string Token = _tokenService.CreateToken(Claims);
-           return Token;
+
+           return Claims;
         }
 
 

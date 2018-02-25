@@ -10,7 +10,7 @@ using static Microsoft.AspNetCore.WebSockets.Internal.Constants;
 
 namespace DotNetCoreJwt.Services.Identity.Tokens
 {
-    public class TokensService:ITokensService
+    public class TokensFactory : ITokensFactory
     {
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
         /// <param name="context"></param>
         /// <returns></returns>
         //TODO should this be moved to a Verify/Validation Service 
-        public bool VerifyBearer(string HostName, dynamic Headers)
+        public bool VerifyBearer(string HostName, IHeaderDictionary Headers)
         {
             bool IsTokenValid = false;
 

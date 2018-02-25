@@ -4,9 +4,9 @@ using System.Security.Claims;
 
 namespace DotNetCoreJwt.Services.Identity.Claims
 {
-    public interface IClaimsService
+    public interface IClaimsFactory
     {
-        string CreateJwtClaims(String UserId, List<String> Roles);
+        List<Claim> CreateJwtClaims(String UserId, List<String> Roles);
         List<Claim> CreateADLDSClaims(String UserId);
     }
 }

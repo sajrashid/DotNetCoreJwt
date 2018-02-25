@@ -5,10 +5,10 @@ using static Microsoft.AspNetCore.WebSockets.Internal.Constants;
 
 namespace DotNetCoreJwt.Services.Identity.Tokens
 {
-    public interface ITokensService
+    public interface ITokensFactory
     {
         string CreateToken(List<Claim> Claims);
 
-        bool VerifyBearer(string hostName, dynamic headers);
+        bool VerifyBearer(string hostName, IHeaderDictionary headers);
     }
 }

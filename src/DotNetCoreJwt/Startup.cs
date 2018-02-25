@@ -63,12 +63,12 @@ namespace DotNetCoreJwt
 
 
             // register custom claims service
-            services.AddSingleton<IClaimsService, ClaimsService>();
+            services.AddSingleton<IClaimsFactory, ClaimsFactory>();
 
 
 
             //register custom Token service
-            services.AddSingleton<ITokensService, TokensService>();
+            services.AddSingleton<ITokensFactory, TokensFactory>();
 
 
 
