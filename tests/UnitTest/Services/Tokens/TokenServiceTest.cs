@@ -19,15 +19,13 @@ namespace UnitTest
         [Fact]
         public void ReturnNonEmptyString()
         {
-            //TODO
-
             var Claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, "Xunit"),
                 new Claim(ClaimTypes.Role, "Dummy")
             };
-            //   var result = _tokenService.BuildToken();
-            Assert.NotEmpty(Claims);
+            var result = _tokenService.BuildToken(Claims);
+            Assert.NotEmpty(result);
         }
     }
 }
