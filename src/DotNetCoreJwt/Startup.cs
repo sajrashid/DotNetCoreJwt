@@ -145,12 +145,15 @@ namespace DotNetCoreJwt
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             // run the custom auth middleware componenet
-            // We should rename this it's not realy doing auth
-            // at the moment it just checks if your autheticated with bearer or windows auth
-            // maybe we call is validation middeware as where validating the user is from mule for example
-            app.UseMiddleware<AuthorizeMiddleWare>();
+            // Rename From Auth MiddleW
+            // at the moment it just checks if your autheticated with bearer
+            app.UseMiddleware<VerifyTokenSenderMiddleWare>();
 
 
+            // run the custom auth middleware componenet
+            // Rename From Auth MiddleW
+            // at the moment it just checks if your autheticated with AD
+            app.UseMiddleware<WindowsAuthenticationMiddleWare>();
 
 
             //app metrics 

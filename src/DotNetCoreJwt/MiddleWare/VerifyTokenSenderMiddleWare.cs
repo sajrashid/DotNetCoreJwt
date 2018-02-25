@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DotNetCoreJwt.MiddleWare
 {
-    public class AuthorizeMiddleWare
+    public class VerifyTokenSenderMiddleWare
     {
         private readonly RequestDelegate next;
 
 
-        public AuthorizeMiddleWare(RequestDelegate next)
+        public VerifyTokenSenderMiddleWare(RequestDelegate next)
         {
             this.next = next;
         }
