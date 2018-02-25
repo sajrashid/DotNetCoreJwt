@@ -14,7 +14,11 @@ namespace DotNetCoreJwt.MiddleWare
         {
             this.next = next;
         }
-
+        /// <summary>
+        /// This is useful middlware for trapping errors in other middleware
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             try
@@ -27,6 +31,13 @@ namespace DotNetCoreJwt.MiddleWare
             }
         }
 
+        /// <summary>
+        /// Traps Exceptions in middleware
+        /// set a breakpoint on return
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected

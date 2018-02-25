@@ -8,7 +8,9 @@ using DotNetCoreJwt.Services.Identity.Claims;
 
 namespace API.Controllers
 {
-
+    /// <summary>
+    /// TOken controller for Token actions
+    /// </summary>
     [Route("api/[controller]")]
     public class TokenController : Controller
     {
@@ -25,7 +27,12 @@ namespace API.Controllers
         }
 
 
-
+        /// <summary>
+        /// here we return a JWT token from the claims service
+        /// The claims service gets the token from the token service
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult CreateToken([FromBody] Key Key)
@@ -39,7 +46,7 @@ namespace API.Controllers
 
 
             // TODO  // check/validate api keys  get from DB
-            if (Key.APIKey == "SuperDuperApiKey")
+            if (Key.APIKey == "q1WkAk+jB3K1jc2cbwNDDO5JjwleCmUWhw/aPCay9J8=")
             {
                 User = "Mule"; //TODO get userneme from db
                 Roles.Add("Mule");//TODO get role from db/api key

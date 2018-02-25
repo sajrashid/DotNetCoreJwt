@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetCoreJwt.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     public class ValuesController : Controller

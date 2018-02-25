@@ -5,6 +5,6 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
 {
     public interface ITokensService
     {
-        string BuildToken(List<Claim> Claims);
+        string CreateToken(List<Claim> Claims);
     }
 }

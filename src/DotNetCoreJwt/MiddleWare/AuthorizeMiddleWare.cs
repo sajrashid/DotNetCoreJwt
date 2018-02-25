@@ -16,14 +16,18 @@ namespace DotNetCoreJwt.MiddleWare
             this.next = next;
         }
 
-
+        /// <summary>
+        /// This Middleware validates a JWT token, by comparing the senders HostName
+        /// To the DB record
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context) 
         {
-            bool IsAuthenticated = context.User.Identity.IsAuthenticated;
-            string AuthenticationType = string.Empty;
             // Test if caller is authenticated otherwise they need to get a token
             // windows will handle the authentication automatically and set isAuthenticated to true;
-
+            bool IsAuthenticated = context.User.Identity.IsAuthenticated;
+            string AuthenticationType = string.Empty;
 
 
             if (IsAuthenticated)
@@ -48,7 +52,7 @@ namespace DotNetCoreJwt.MiddleWare
                 // else check if windows authentication
                 else if ((AuthenticationType == "ntlm" || AuthenticationType == "kerberos"))
                 {
-                    //TODO attach claims for windows users
+                    //TODO attach claims for windows users or create method in token service might be better ???
                     // use CreateADLDSClaims in the ClaimsService
                 }
             }
@@ -58,7 +62,11 @@ namespace DotNetCoreJwt.MiddleWare
         }
 
 
-
+        /// <summary>
+        /// This methods ectracts the bearer token from the header and compares to DB, find calller matches db record, todo query on hostname
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         //TODO should this be moved to a Verify/Validation Service 
         private bool VerifyBearer(HttpContext context)
         {

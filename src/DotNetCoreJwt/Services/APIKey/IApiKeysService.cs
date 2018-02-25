@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace DotNetCoreJwt.Services.APIKey
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IApiKeysService
     {
         String CreateKeys();

@@ -26,7 +26,7 @@ namespace UnitTest
                 new Claim(ClaimTypes.Name, "Xunit"),
                 new Claim(ClaimTypes.Role, "Dummy")
             };
-            var result = _tokenService.BuildToken(Claims);
+            var result = _tokenService.CreateToken(Claims);
             Assert.NotEmpty(result);
         }
     }

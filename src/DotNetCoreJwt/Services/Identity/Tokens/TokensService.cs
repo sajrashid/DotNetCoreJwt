@@ -9,8 +9,12 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
     public class TokensService:ITokensService
     {
 
-
-        public string BuildToken(List<Claim> Claims)
+        /// <summary>
+        /// Build a JWT tokens with a list of claims
+        /// </summary>
+        /// <param name="Claims"></param>
+        /// <returns></returns>
+        public string CreateToken(List<Claim> Claims)
         {
             // JWT Key we can use app.settings
             //TODO get key from Appsetting for dev
@@ -18,7 +22,7 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
             // Don't forget update the startup if you change it here or we will get a key mismatch
             string JwtSigningKey = "fjboJU3s7rw2Oafzum5fBxZoZ5jihQRbpBZcxZFd/gY=";
 
-            // create a securoty key
+            // create a security key
             var key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(JwtSigningKey));
 
 
@@ -26,7 +30,7 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 
-            // create the token from the signed credential
+            // create the token from the signed credentials
             var token = new JwtSecurityToken(
               issuer: "localhost",
               audience: "localhost",
