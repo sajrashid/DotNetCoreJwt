@@ -18,8 +18,4 @@
     <ProjectReference Include="..\..\src\DotNetCoreJwt\DotNetCoreJwt.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Claims\" />
-  </ItemGroup>
-
 </Project>
