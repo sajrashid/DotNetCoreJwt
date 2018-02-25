@@ -16,7 +16,7 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
             //TODO get key from Appsetting for dev
             //TODO for live we must use and environment variable
             // Don't forget update the startup if you change it here or we will get a key mismatch
-            string JwtSigningKey = "Rather_very_long_key";
+            string JwtSigningKey = "fjboJU3s7rw2Oafzum5fBxZoZ5jihQRbpBZcxZFd/gY=";
 
             // create a securoty key
             var key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(JwtSigningKey));

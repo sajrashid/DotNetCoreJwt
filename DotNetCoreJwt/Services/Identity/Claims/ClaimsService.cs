@@ -1,11 +1,10 @@
-﻿using DotNetCoreJwt.Services.Identity.Claims;
-using DotNetCoreJwt.Services.Identity.Tokens;
+﻿using DotNetCoreJwt.Services.Identity.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
 
-namespace otNetCoreJwt.Services.Identity.Claims
+namespace DotNetCoreJwt.Services.Identity.Claims
 {
     public class ClaimsService:IClaimsService
     {

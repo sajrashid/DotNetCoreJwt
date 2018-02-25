@@ -7,9 +7,10 @@ getJwtBtn.onclick = function () {
     getRes.innerText = "...........";
     // get token
     $.ajax({
-        
-        url: "http://localhost:57425/api/Token?APIKey=SuperDuperApiKey", 
-        type: 'Get',
+
+        url: "http://localhost:57425/api/Token?APIKey=SuperDuperApiKey",
+        type: 'Post',
+        data: '{"APIKey":"SuperDuperApiKey"}',
         contentType: "application/json-patch+json",
         error: function (err) {
             console.log('Error!', err);

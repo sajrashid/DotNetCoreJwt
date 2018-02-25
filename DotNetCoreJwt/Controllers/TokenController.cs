@@ -8,7 +8,7 @@ using DotNetCoreJwt.Services.Identity.Claims;
 
 namespace API.Controllers
 {
-   
+
     [Route("api/[controller]")]
     public class TokenController : Controller
     {
@@ -21,14 +21,14 @@ namespace API.Controllers
         {
             _logger = logger;
             _config = config;
-            _claimsService=claimsService;
+            _claimsService = claimsService;
         }
 
 
 
         [AllowAnonymous]
-        [HttpGet]
-        public IActionResult CreateToken(String APIKey)
+        [HttpPost]
+        public IActionResult CreateToken([FromBody] Key Key)
         {
             // sets default to not authroised http 401
             IActionResult response = Unauthorized();
@@ -38,25 +38,29 @@ namespace API.Controllers
 
 
 
-            // TODO  // check api keys  get from DB
-            if (APIKey == "SuperDuperApiKey") 
+            // TODO  // check/validate api keys  get from DB
+            if (Key.APIKey == "SuperDuperApiKey")
             {
                 User = "Mule"; //TODO get userneme from db
                 Roles.Add("Mule");//TODO get role from db/api key
 
 
                 // get a token
-                String TokenString = _claimsService.CreateJwtClaims(User, Roles); 
+                String TokenString = _claimsService.CreateJwtClaims(User, Roles);
 
 
 
                 //update the http response  to http 200 & send token to caller
                 response = Ok(new { token = TokenString });
             }
-           
+
             return response;
         }
 
-        
+        public class Key
+        {
+            public String APIKey { get; set; }
+
+        }
     }
 }

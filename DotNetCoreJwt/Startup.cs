@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using DotNetCoreJwt.MiddleWare;
+using DotNetCoreJwt.Services.APIKey;
 using DotNetCoreJwt.Services.Identity.Claims;
 using DotNetCoreJwt.Services.Identity.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,20 +34,19 @@ namespace DotNetCoreJwt
                      {
 
 
-                         ValidateIssuer = true,
-                         ValidateAudience = true,
+                         ValidateIssuer = false,
+                         ValidateAudience = false,
                          ValidateLifetime = true,
-                         ValidateIssuerSigningKey = true,
+                         ValidateIssuerSigningKey = false,
                          ClockSkew = TimeSpan.Zero,
-                         ValidIssuer = "localhost",
-                         ValidAudience = "localhost",
+                        
 
 
                          // JWT Key we can use app.settings
                          //TODO get key from Appsetting for dev
                          //TODO for live we must use and environment variable
                          // Don't forget update the TokenService if you change it here or we will get a key mismatch
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Rather_very_long_key"))
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("fjboJU3s7rw2Oafzum5fBxZoZ5jihQRbpBZcxZFd/gY="))
                        
                      };
                  });
@@ -72,6 +72,11 @@ namespace DotNetCoreJwt
 
 
 
+            //register custom API Key Generating service
+            services.AddSingleton<IApiKeysService, APIKeysService>();
+
+
+
             //add mvc with options for AppMetrics set this back to  services.AddMvc(); if Appmetrics is removed
             services.AddMvc(options => options.AddMetricsResourceFilter());
           
@@ -81,9 +86,17 @@ namespace DotNetCoreJwt
             // swagger needs to be after service.mvc
             //https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-help-pages-using-swagger?tabs=visual-studio
             // url is http://localhost:port/swagger/
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
             });
 
 
