@@ -12,3 +12,9 @@
 /MetricsRazor/obj/Debug/
 /MetricsRazor/bin/Debug/net461
 /MetricsRazor/obj/Release/net461
+/src/MetricsRazor/bin/Debug/net461
+/src/MetricsRazor/obj
+/tests/UnitTest/bin/Debug/netcoreapp2.0
+/tests/UnitTest/obj/Debug/netcoreapp2.0
+/tests/UnitTest/obj/Release/netcoreapp2.0
+/tests/UnitTest/obj
