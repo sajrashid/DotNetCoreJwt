@@ -42,28 +42,28 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult CreateToken([FromBody] Key Key)
         {
-            // sets default to not authroised http 401
+            //Defaults to not authroised http 401
             IActionResult response = Unauthorized();
-
-            var User = string.Empty;
-            var Roles = new List<String>();
 
 
 
             // TODO  // check/validate api keys  get from DB
             if (Key.APIKey == "q1WkAk+jB3K1jc2cbwNDDO5JjwleCmUWhw/aPCay9J8=")
             {
-                User = "Mule"; //TODO get userneme from db
-                Roles.Add("Mule");//TODO get role from db/api key
+                var User = "Mule";
+                var Roles = new List<String>()
+                {
+                    "Mule"
+                 };
+                //TODO get role from db/api key get userneme from db
 
-                //get claims
-                // Get new token from token service
+                //get claims from the claims factory
                 List<Claim> Claims = _claimsfactory.CreateJwtClaims(User, Roles);
 
-                // get a token
+                // // Get new token from token factory
                 String TokenString = _tokensfactory.CreateToken(Claims);
 
-                //update the http response  to http 200 & send token to caller
+                //update the http response send token to caller
                 response = Ok(new { token = TokenString });
             }
 
