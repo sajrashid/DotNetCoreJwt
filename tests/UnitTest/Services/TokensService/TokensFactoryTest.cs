@@ -21,7 +21,7 @@ namespace UnitTest
         [Fact]
         public void IsTokenFactoryCreatingValidTokens()
         {
-            // set up token validation rules
+            // set up token validation rules get from startup
             TokenValidationParameters validationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = false,
