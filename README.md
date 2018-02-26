@@ -32,27 +32,20 @@ Uese Swagger, go to api/swagger for API doc's
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+The project uses XUNIT, testrunner is included.
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+TODO
 
-```
-Give an example
-```
 
 ### And coding style tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
+TODO
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+TODO
 
 ## Built With
 
