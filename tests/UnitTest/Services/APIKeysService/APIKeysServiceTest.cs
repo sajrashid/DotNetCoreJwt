@@ -34,7 +34,7 @@ namespace UnitTest
 
             // Begin Test
             // hard to test can't fake RNGCryptoServiceProvider
-            // will test for base64
+            // will test for base64 instead 
             // can this be improved ?
             Assert.NotEmpty(result);
             Assert.IsType<string>(result);

@@ -47,7 +47,9 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
 
 
         /// <summary>
-        /// This methods ectracts the bearer token from the header and compares to DB, find calller matches db record, todo query on hostname
+        /// This methods extracts the bearer token from the header 
+        /// and verifies the sending machine matches who the token was issued to
+        /// compares sender/bearer to DB, find calller matches db record, todo query on hostname
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
