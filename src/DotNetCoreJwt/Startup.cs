@@ -62,17 +62,17 @@ namespace DotNetCoreJwt
 
 
 
-            // register custom claims service
+            // register  claims service
             services.AddSingleton<IClaimsFactory, ClaimsFactory>();
 
 
 
-            //register custom Token service
+            //register  Token service
             services.AddSingleton<ITokensFactory, TokensFactory>();
 
 
 
-            //register custom API Key Generating service
+            //register  API Key Generating service
             services.AddSingleton<IApiKeysService, APIKeysService>();
 
 
