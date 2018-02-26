@@ -19,7 +19,6 @@ namespace UnitTest
         [Fact]
         public void ValidateToken()
         {
-            SecurityToken validatedToken;
             TokenValidationParameters validationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = false,
@@ -40,7 +39,7 @@ namespace UnitTest
             // TODO proper test for valid token type
             Assert.IsType<string>(Token);
             Assert.NotEmpty(Token);
-            new JwtSecurityTokenHandler().ValidateToken(Token, validationParameters, out validatedToken);
+            new JwtSecurityTokenHandler().ValidateToken(Token, validationParameters, out SecurityToken validatedToken);
         }
     }
 }
