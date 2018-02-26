@@ -80,4 +80,3 @@ getApiKeyBtn.onclick = function () {
             // Fetch the stored token from localStorage and set in the header
         });
 }
-getApiKey
