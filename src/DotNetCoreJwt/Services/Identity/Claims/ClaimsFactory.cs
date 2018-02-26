@@ -46,7 +46,7 @@ namespace DotNetCoreJwt.Services.Identity.Claims
         public List<Claim> CreateADLDSClaims(String UserId) //use StaffId for windows.
         {
             //TOFO get roles from ADLDS/LDAP & Create Claims
-            var claims = new List<Claim>
+            var Claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, UserId),
                     };
@@ -57,7 +57,7 @@ namespace DotNetCoreJwt.Services.Identity.Claims
             //{
             //    Claims.Add(new Claim(ClaimTypes.Role, role));
             //}
-            return claims;
+            return Claims;
         }
 
       
