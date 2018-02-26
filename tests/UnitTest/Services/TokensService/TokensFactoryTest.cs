@@ -19,7 +19,7 @@ namespace UnitTest
         /// Test is the token factory is generating valid JWT Tokens
         /// </summary>
         [Fact]
-        public void TestIsTokenValid()
+        public void IsTokenFactoryCreatingValidTokens()
         {
             // set up token validation rules
             TokenValidationParameters validationParameters = new TokenValidationParameters

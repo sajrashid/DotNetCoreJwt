@@ -15,7 +15,7 @@ namespace UnitTest
         /// Check claims factory is operational and returning valid claims
         /// </summary>
         [Fact]
-        public void TestCreatingClaims()
+        public void IsClaimsFactoryCreatingValidClaims()
         {
             ClaimsFactory ClaimsFactory = new ClaimsFactory();
             var Roles = new List<string>

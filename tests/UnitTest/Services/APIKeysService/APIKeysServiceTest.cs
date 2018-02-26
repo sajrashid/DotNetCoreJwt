@@ -18,7 +18,7 @@ namespace UnitTest
         /// of provider/ type of encryption
         /// </summary>
         [Fact]
-        public void TestApiKeyisValid()
+        public void IsApiKeyServiceCreatingValidCrptoKeys()
         {
             string APIKey = string.Empty;
             using (var cryptoProvider = new RNGCryptoServiceProvider())
