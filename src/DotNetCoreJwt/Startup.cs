@@ -155,6 +155,7 @@ namespace DotNetCoreJwt
             // at the moment it just checks if your autheticated with AD
             app.UseMiddleware<WindowsAuthenticationMiddleWare>();
 
+             
 
             //app metrics 
             //https://al-hardy.blog/2017/04/28/asp-net-core-monitoring-with-influxdb-grafana/

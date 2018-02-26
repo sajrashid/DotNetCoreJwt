@@ -1,6 +1,4 @@
 ﻿using DotNetCoreJwt.Services.Identity.Claims;
-using DotNetCoreJwt.Services.Identity.Tokens;
-
 using System.Collections.Generic;
 using System.Security.Claims;
 using Xunit;
@@ -13,18 +11,22 @@ namespace UnitTest
 
         
 
-        ClaimsFactory ClaimsFactory = new ClaimsFactory();
-
+        /// <summary>
+        /// Check claims factory is operational and returning valid claims
+        /// </summary>
         [Fact]
-        public void ReturnClaimsString()
+        public void TestCreatingClaims()
         {
-
+            ClaimsFactory ClaimsFactory = new ClaimsFactory();
             var Roles = new List<string>
             {
                 "XunitRole"
             };
-            var result = ClaimsFactory.CreateJwtClaims("Xunit", Roles);
-            Assert.IsType<List<Claim>>(result);
+            //Begin tests  
+            // create a claim
+            var Claims = ClaimsFactory.CreateJwtClaims("Xunit", Roles);
+            // test the type is Claim
+            Assert.IsType<List<Claim>>(Claims);
         }
     }
 }

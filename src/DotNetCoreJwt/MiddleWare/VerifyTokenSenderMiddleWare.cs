@@ -25,12 +25,12 @@ namespace DotNetCoreJwt.MiddleWare
         /// <returns></returns>
         public async Task Invoke(HttpContext context) 
         {
-            // Test if caller is authenticated otherwise they need to get a token
-            // windows will handle the authentication automatically and set isAuthenticated to true;
+            // Test if caller is authenticated 
             bool IsAuthenticated = context.User.Identity.IsAuthenticated;
             string AuthenticationType = string.Empty;
 
 
+            // if true we need to test if the token has been issued to the current sender/caller
             if (IsAuthenticated)
             {     
                  // get the type of authentication
@@ -38,17 +38,19 @@ namespace DotNetCoreJwt.MiddleWare
 
 
 
-                // test if  AuthTYpe is bearer (authenticationTypes.federation)
+                // test if  AuthTppe is bearer (authenticationTypes.federation)
                 if (AuthenticationType == "authenticationtypes.federation")
                 {
                     //get callers IP
                     var RemoteIpAddress = context.Connection.RemoteIpAddress.ToString(); //  returns  ::1 if local
+                    // do a reverse DNS lookup
+                    // TODO time DNS if more that say 20ms we could use the cache DB
                     String HostName = Dns.GetHostName();
                     IHeaderDictionary headers = context.Request.Headers;
                     // test if the caller macthes HOSTNAME etc..
                     if (!_tokenService.VerifyBearer(HostName, headers))
                     {
-                        // if not send 401 unauthorised
+                        // if token not verfied send 401 unauthorised
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     }
                    

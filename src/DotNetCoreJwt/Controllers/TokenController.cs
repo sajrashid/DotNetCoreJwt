@@ -45,8 +45,9 @@ namespace API.Controllers
             //Defaults to not authroised http 401
             IActionResult response = Unauthorized();
 
-
-
+           
+            
+               
             // TODO  // check/validate api keys  get from DB
             if (Key.APIKey == "q1WkAk+jB3K1jc2cbwNDDO5JjwleCmUWhw/aPCay9J8=")
             {

@@ -27,22 +27,22 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
             string JwtSigningKey = "fjboJU3s7rw2Oafzum5fBxZoZ5jihQRbpBZcxZFd/gY=";
 
             // create a security key
-            var key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(JwtSigningKey));
+            var Key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(JwtSigningKey));
 
 
             // sign the key using specified algorithm
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var Creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
 
 
             // create the token from the signed credentials
-            var token = new JwtSecurityToken(
+            var Token = new JwtSecurityToken(
               issuer: "localhost",
               audience: "localhost",
               expires: DateTime.Now.AddMinutes(1),
-              signingCredentials: creds);
+              signingCredentials: Creds);
 
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(Token);
         }
 
 
@@ -58,18 +58,20 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
 
 
             //TODO change this out to list of allowed hostname IP address
+            // store list where ? Database is too slow or appsetting is better, then we need a change to update
+            // Maybe create a controller that lets us add allowed API users (for bearer token users)
             if (HostName == "DESKTOP-34G30MJ")  //shows  ::1  for local set this for mule
             {
 
-                // loop thorugh all header for each header
-                foreach (var header in Headers)
+                // loop thorugh all headers for each header
+                foreach (var Header in Headers)
                 {
 
-                    // test if the auth header = Authorization
-                    if (header.Key == "Authorization")
+                    // test if the auth header is Authorization
+                    if (Header.Key == "Authorization")
                     {
                         // test the header for word bearer
-                        bool IsBearer = header.Value.ToString().ToLower().Contains("bearer");
+                        bool IsBearer = Header.Value.ToString().ToLower().Contains("bearer");
 
 
 
@@ -77,9 +79,9 @@ namespace DotNetCoreJwt.Services.Identity.Tokens
                         if (IsBearer) // header found!!!
                         {
                             // get header value
-                            String Headervalue = header.Value;
+                            String Headervalue = Header.Value;
                             // we are using regex to remove bearer with ignore case!!!
-                            string token = Regex.Replace(Headervalue, "bearer ", "", RegexOptions.IgnoreCase);
+                            string Token = Regex.Replace(Headervalue, "bearer ", "", RegexOptions.IgnoreCase);
                             //now we have a clean token to check against the stored token in the DB
 
 
